@@ -2,15 +2,14 @@ import styled from "styled-components";
 
 const Loading = styled.div`
   width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  bottom: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  height: 100vh;
+  height: 100%;
 
   .blur {
     width: 100%;
