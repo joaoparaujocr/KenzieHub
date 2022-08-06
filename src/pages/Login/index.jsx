@@ -1,5 +1,5 @@
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -30,13 +30,6 @@ const Login = () => {
 
   const onSumitForm = data => {
     setModalVisible(true);
-    const configToast = {
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    }
 
     api.post("/sessions", {...data})
       .then(res => {
@@ -47,27 +40,18 @@ const Login = () => {
         localStorage.setItem("@tokenkenziehub", token);
         localStorage.setItem("@useridkenziehub", userid);
 
-        toast.success('Login feito com sucesso', {
-          position: "top-left",
-          autoClose: 1200,
-          ...configToast
-        });
+        toast.success('Login feito com sucesso');
 
-        setTimeout(() => navigate("dashboard", { replace: true }), 1800)
+        navigate("dashboard", { replace: true });
       })
       .catch(err => {
         setModalVisible(false)
-        toast.error(err.response.data.message, {
-          position: "top-left",
-          autoClose: 2200,
-          ...configToast,
-        });
+        toast.error(err.response.data.message);
       })
   };
 
   return (
     <ContainerMain>
-      <ToastContainer />
       {modalVisible && <ModalLoading />}
       <h1>Kenzie Hub</h1>
       <FormContainer>

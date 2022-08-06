@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png"
 import api from "../../service/api";
 import DashboardStyle from "./style";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ModalLoading from "../../components/ModalLoading";
 
@@ -22,15 +22,7 @@ const Dashboard = () => {
           setRenderContent(true)
         })
         .catch(err => {
-          toast.error(err.response.data.message, {
-            position: "top-left",
-            autoClose: 2200,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error(err.response.data.message);
         });
       return
     }
@@ -47,7 +39,6 @@ const Dashboard = () => {
     <>
       {renderContent ? (
         <DashboardStyle>
-          <ToastContainer />
           <header>
             <div className="container">
               <img src={logo} alt="" />

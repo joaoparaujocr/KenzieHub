@@ -6,9 +6,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schemaRegister from "../../validations/userRegister";
 import api from "../../service/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ModalLoading from "../../components/ModalLoading";
-import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 
 const Register = () => {
@@ -31,19 +30,12 @@ const Register = () => {
 
     api.post("/users", dataRegister)
       .then(res => {
+        toast.success("Usuario criado com sucesso.")
         navigate("/", { replace: true })
       })
       .catch(err => {
         setModalVisible(false);
-        toast.error("Email já cadastrado", {
-          position: "bottom-center",
-          autoClose: 2200,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("Email já cadastrado");
       })
 
   };
@@ -52,7 +44,6 @@ const Register = () => {
     <>
       {modalVisible && <ModalLoading />}
       <ContainerMain>
-        <ToastContainer />
         <header>
           <h1>kenzie Hub</h1>
           <Link to="/">Voltar</Link>
