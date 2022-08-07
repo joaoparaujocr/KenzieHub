@@ -11,33 +11,27 @@ const Dashboard = () => {
   const navigation = useNavigate()
   const token = localStorage.getItem("@tokenkenziehub");
   const userid = localStorage.getItem("@useridkenziehub");
-  const [infoUser, setInfoUser] = useState();
-  const [renderContent, setRenderContent] = useState(false);
+  const [infoUser, setInfoUser] = useState(null);
 
   useEffect(() => {
     if (token && userid) {
       api.get(`/users/${userid}`)
-        .then(res => {
-          setInfoUser(res.data)
-          setRenderContent(true)
-        })
-        .catch(err => {
-          toast.error(err.response.data.message);
-        });
+        .then(res => setInfoUser(res.data))
+        .catch(err => toast.error(err.response.data.message));
       return
     }
-
     navigation("/", { replace: true })
 
-  }, [token, userid, navigation])
+  }, [navigation, token, userid])
 
   const logout = () => {
     localStorage.clear()
     navigation("/", { replace: true })
   }
+  
   return (
     <>
-      {renderContent ? (
+      {infoUser ? (
         <DashboardStyle>
           <header>
             <div className="container">

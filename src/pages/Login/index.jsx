@@ -41,7 +41,6 @@ const Login = () => {
         localStorage.setItem("@useridkenziehub", userid);
 
         toast.success('Login feito com sucesso');
-
         navigate("dashboard", { replace: true });
       })
       .catch(err => {
