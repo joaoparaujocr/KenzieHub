@@ -40,7 +40,9 @@ export const UserProvide = ({ children }) => {
     if (user) {
       setModalLoading(true);
       await api.get(`/users/${user}`)
-        .then(res => setInfoUser(res.data))
+        .then(res => {
+          console.log(res.data)
+          setInfoUser(res.data)})
         .catch(err => toast.error(err.response.data.message));
         
       setModalLoading(false)
