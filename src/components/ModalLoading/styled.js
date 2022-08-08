@@ -22,7 +22,7 @@ const Loading = styled.div`
   align-items: center;
   background-color: black;
   height: 100vh;
-  filter: opacity(0.8);
+  filter: opacity(1);
   }
 
   span {

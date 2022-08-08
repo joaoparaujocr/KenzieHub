@@ -1,34 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import logo from "../../assets/logo.png"
-import api from "../../service/api";
 import DashboardStyle from "./style";
-import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ModalLoading from "../../components/ModalLoading";
+import { UserContext } from "../../context/UserContext";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigation = useNavigate()
-  const token = localStorage.getItem("@tokenkenziehub");
-  const userid = localStorage.getItem("@useridkenziehub");
-  const [infoUser, setInfoUser] = useState(null);
+  const { navigate, infoUser, modalLoading, getInfoUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (token && userid) {
-      api.get(`/users/${userid}`)
-        .then(res => setInfoUser(res.data))
-        .catch(err => toast.error(err.response.data.message));
-      return
-    }
-    navigation("/", { replace: true })
-
-  }, [navigation, token, userid])
+    getInfoUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const logout = () => {
     localStorage.clear()
-    navigation("/", { replace: true })
+    navigate("/", { replace: true })
   }
-  
+
+  if(modalLoading) return <ModalLoading />
+
   return (
     <>
       {infoUser ? (
@@ -54,7 +46,7 @@ const Dashboard = () => {
           </main>
         </DashboardStyle>
       ) : (
-        <ModalLoading />
+        <Navigate to="/" replace />
       )}
     </>
     )
