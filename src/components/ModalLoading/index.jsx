@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const ModalLoading = () => {
 
   const spinTransition = {
-    loop: Infinity,
+    repeat: Infinity,
     duration: 1.3,
     ease: "easeInOut"
   }
