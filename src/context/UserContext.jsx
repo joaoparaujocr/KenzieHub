@@ -63,7 +63,7 @@ export const UserProvide = ({ children }) => {
       toast.success('Login feito com sucesso');
       navigate("dashboard", { replace: true });
     })
-    .catch(err => toast.error("Email ou senha incorreto"));
+    .catch(err => toast.error("Email ou senha invalidos"));
 
     setModalLoading(false);
   }
