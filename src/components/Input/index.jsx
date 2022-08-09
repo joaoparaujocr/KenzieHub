@@ -1,9 +1,9 @@
 import InputStyle from "./style";
 
-const Input = ({ placeholder, children, type = "text", isVisiblePassword, id, register }) => {
+const Input = ({ value , placeholder, children, type = "text", isVisiblePassword, id, register, disabled = false }) => {
   return (
     <InputStyle>
-      <input {...register} type={isVisiblePassword ? "text" : type} placeholder={placeholder} id={id}/>
+      <input value={value} disabled={disabled} {...register} type={isVisiblePassword ? "text" : type} placeholder={placeholder} id={id}/>
       {children && children}
     </InputStyle>
   )

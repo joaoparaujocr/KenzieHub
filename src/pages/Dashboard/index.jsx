@@ -1,13 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa"
+import { IoMdAdd } from "react-icons/io";
 import logo from "../../assets/logo.png"
 import DashboardStyle from "./style";
 import 'react-toastify/dist/ReactToastify.css';
 import ModalLoading from "../../components/ModalLoading";
 import { UserContext } from "../../context/UserContext";
 import { Navigate } from "react-router-dom";
+import ModalRegisTech from "../../components/ModalRegisTech";
+import ModalUpdateTech from "../../components/ModalEditTech";
 
 const Dashboard = () => {
-  const { navigate, infoUser, modalLoading, getInfoUser } = useContext(UserContext);
+  const { navigate, infoUser, modalLoading, getInfoUser, deleteTech } = useContext(UserContext);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [modalUpdateTech, setModalUpdateTech] = useState(false);
+  const [idTech, setIdTech] = useState(0);
 
   useEffect(() => {
     getInfoUser()
@@ -41,7 +48,30 @@ const Dashboard = () => {
 
           <main>
             <div className="container">
-              <h2>Que pena! Estamos em desenvolvimento :(</h2>
+              <div className="createTechs">
+                <h3>Tecnologias</h3>
+                <button onClick={() => setModalOpen(!modalIsOpen)}><IoMdAdd /></button>
+                <ModalRegisTech modalIsOpen={modalIsOpen} closeModal={setModalOpen} />
+              </div>
+              <ul>
+                <ModalUpdateTech id={idTech} modalIsOpen={modalUpdateTech} closeModal={setModalUpdateTech} />
+                {infoUser.techs.length > 0 ? infoUser?.techs.map(({ id, title, status }) => (
+                  <li key={id}>
+                    <h2>{title}</h2>
+
+                    <div className="groupButtons">
+                      <p>{status}</p>
+                      <button onClick={() => deleteTech(id)} className="trash"><FaTrash /></button>
+                      <button className="edit" onClick={() => {
+                        setIdTech(id)
+                        setModalUpdateTech(!modalUpdateTech)
+                        }}><FaEdit /></button>
+                    </div>
+                  </li>
+                )) : (
+                  <h4>Sem tecnologias cadastradas</h4>
+                )}
+              </ul>
             </div>
           </main>
         </DashboardStyle>
