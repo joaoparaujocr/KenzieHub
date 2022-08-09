@@ -26,6 +26,10 @@ const InputStyle = styled.div`
       &:focus {
         border: 1px solid white;
       }
+
+      &:disabled {
+        color: var(--grey-3);
+      }
     }
 
     span {
