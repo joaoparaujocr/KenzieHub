@@ -1,48 +1,24 @@
 import ContainerMain from "./style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormContainer from "../../components/Form";
 import Input from "../../components/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schemaRegister from "../../validations/userRegister";
-import api from "../../service/api";
-import { toast } from "react-toastify";
 import ModalLoading from "../../components/ModalLoading";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const { modalLoading, registerUser } = useContext(UserContext)
 
-  useEffect(() => {
-    if (localStorage.getItem("@tokenkenziehub") && localStorage.getItem("@useridkenziehub")) {
-      navigate("/dashboard", { replace: true })
-    }
-  })
-
-  const [modalVisible, setModalVisible] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schemaRegister)
   });
 
-  const submitForm = ({ email, password, name, bio, contact, course_module }) => {  
-    setModalVisible(true);
-    const dataRegister = { email, password, name, bio, contact, course_module };
-
-    api.post("/users", dataRegister)
-      .then(res => {
-        toast.success("Usuario criado com sucesso.")
-        navigate("/", { replace: true })
-      })
-      .catch(err => {
-        setModalVisible(false);
-        toast.error("Email já cadastrado");
-      })
-
-  };
-
   return (
     <>
-      {modalVisible && <ModalLoading />}
+      {modalLoading && <ModalLoading />}
       <ContainerMain>
         <header>
           <h1>kenzie Hub</h1>
@@ -52,7 +28,7 @@ const Register = () => {
         <FormContainer>
           <h3>Crie sua conta</h3>
           <p>Rapido e grátis, vamos nessa</p>
-          <form onSubmit={handleSubmit(submitForm)}>
+          <form onSubmit={handleSubmit(registerUser)}>
             <label htmlFor="name">Nome</label>
             <Input register={register("name")} placeholder={"Digite seu nome"} id="name" />
             <span>{errors.name?.message}</span>
