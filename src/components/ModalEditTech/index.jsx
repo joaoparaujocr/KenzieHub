@@ -8,7 +8,7 @@ import { UserContext } from '../../context/UserContext';
 
 Modal.setAppElement("#root");
 
-const ModalUpdateTech = ({modalIsOpen, closeModal, id = null}) => {
+const ModalUpdateTech = ({ setIdTech, modalIsOpen, closeModal, id = null}) => {
   const { updateTech, infoUser: {techs} } = useContext(UserContext);
   const { register, handleSubmit } = useForm()
 
@@ -31,6 +31,7 @@ const ModalUpdateTech = ({modalIsOpen, closeModal, id = null}) => {
 
         <form onSubmit={handleSubmit((data) => {
           updateTech(id, data);
+          setIdTech(null);
           closeModal(!modalIsOpen);
         })}>
           <label htmlFor="title">Nome</label>

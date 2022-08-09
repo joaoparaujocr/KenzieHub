@@ -54,7 +54,7 @@ const Dashboard = () => {
                 <ModalRegisTech modalIsOpen={modalIsOpen} closeModal={setModalOpen} />
               </div>
               <ul>
-                <ModalUpdateTech id={idTech} modalIsOpen={modalUpdateTech} closeModal={setModalUpdateTech} />
+                <ModalUpdateTech setIdTech={setIdTech} id={idTech} modalIsOpen={modalUpdateTech} closeModal={setModalUpdateTech} />
                 {infoUser.techs.length > 0 ? infoUser?.techs.map(({ id, title, status }) => (
                   <li key={id}>
                     <h2>{title}</h2>
