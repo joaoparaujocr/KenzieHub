@@ -26,7 +26,10 @@ const ModalUpdateTech = ({ setIdTech, modalIsOpen, closeModal, id = null}) => {
       >
         <div>
           <h3>Atualizar Nivel</h3>
-          <button onClick={() => closeModal(!modalIsOpen)} ><AiOutlineClose /></button>
+          <button onClick={() => {
+            setIdTech(null);
+            closeModal(!modalIsOpen);
+          }} ><AiOutlineClose /></button>
         </div>
 
         <form onSubmit={handleSubmit((data) => {
