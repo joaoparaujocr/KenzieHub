@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../service/api";
+import { ToastContext } from "./ToastContext";
 
 export const UserContext = createContext({});
 
@@ -9,6 +9,7 @@ export const UserProvide = ({ children }) => {
   const [modalLoading, setModalLoading] = useState(false);
   const [infoUser, setInfoUser] = useState(null);
   const [user, setUser] = useState(null);
+  const { addToast } = useContext(ToastContext);
   const navigate = useNavigate();
 
 
@@ -41,7 +42,7 @@ export const UserProvide = ({ children }) => {
       await api.get(`/users/${user}`)
         .then(res => {
           setInfoUser(res.data)})
-        .catch(err => toast.error(err.response.data.message));
+        .catch(err => addToast("error", err.response.data.message));
         
       setModalLoading(false)
     }
@@ -60,10 +61,10 @@ export const UserProvide = ({ children }) => {
       setUser(id)
       api.defaults.headers.authorization = `Bearer ${token}`;
       
-      toast.success('Login feito com sucesso');
+      addToast("success",'Login feito com sucesso');
       navigate("dashboard", { replace: true });
     })
-    .catch(err => toast.error("Email ou senha invalidos"));
+    .catch(err => addToast("error", "Falha ao fazer o login", "E-mail ou senha invalidos"));
 
     setModalLoading(false);
   }
@@ -73,9 +74,9 @@ export const UserProvide = ({ children }) => {
     await api.post("users/techs", data)
       .then(async res => {
         await getInfoUser()
-        toast.success("Tecnologia adicionada")
+        addToast("success", "Tecnologia adicionada")
       })
-      .catch(err => toast.error("Está tecnologia já existe."))
+      .catch(err => addToast("error", "Está tecnologia já existe."))
     setModalLoading(false);
   }
 
@@ -84,8 +85,8 @@ export const UserProvide = ({ children }) => {
     await api.delete(`/users/techs/${id}`)
       .then(async res => {
         await getInfoUser();
-        toast.success("Tecnologia excluida");
-      }).catch(err => toast.error("Erro ao excluir tecnologia"));
+        addToast("success", "Tecnologia excluida");
+      }).catch(err => addToast("error", "Erro ao excluir tecnologia"));
     setModalLoading(false);
   }
 
@@ -94,8 +95,8 @@ export const UserProvide = ({ children }) => {
     await api.put(`/users/techs/${id}`, data)
       .then(async res => {
         await getInfoUser();
-        toast.success("Nivel da tecnologia atualizado")
-      }).catch(err => toast.error("Erro ao atualizar a tecnologia"));
+       addToast("success", "Nivel da tecnologia atualizado")
+      }).catch(err => addToast("error","Erro ao atualizar a tecnologia"));
     setModalLoading(false)
   }
 
@@ -104,11 +105,11 @@ export const UserProvide = ({ children }) => {
     setModalLoading(true);
     api.post("/users", dataRegister)
       .then(res => {
-        toast.success("Usuario criado com sucesso.")
+        addToast("success", "Usuario criado com sucesso.")
         navigate("/", { replace: true })
       })
       .catch(err => {
-        toast.error("Email já cadastrado");
+        addToast("error","Email já cadastrado");
       })
       setModalLoading(false);
   }
@@ -118,5 +119,4 @@ export const UserProvide = ({ children }) => {
       {children}
     </UserContext.Provider>
   )
-
 }

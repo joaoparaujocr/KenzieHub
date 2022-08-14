@@ -5,6 +5,8 @@ const Loading = styled.div`
   position: fixed;
   bottom: 0;
   right: 0;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
