@@ -55,12 +55,12 @@ const Register = () => {
 
             <label htmlFor="model">Selecione o modulo</label>
             <select {...register("course_module")} name="" id="model">
-              <option value="modulo1">Modulo 1</option>
-              <option value="">Modulo 2</option>
-              <option value="">Modulo 3</option>
-              <option value="">Modulo 4</option>
-              <option value="">Modulo 5</option>
-              <option value="">Modulo 6</option>
+              <option value="Modulo 1">Modulo 1</option>
+              <option value="Modulo 2">Modulo 2</option>
+              <option value="Modulo 3">Modulo 3</option>
+              <option value="Modulo 4">Modulo 4</option>
+              <option value="Modulo 5">Modulo 5</option>
+              <option value="Modulo 6">Modulo 6</option>
             </select>
 
             <button type="submit">Cadastrar</button>
