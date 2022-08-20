@@ -8,14 +8,13 @@ import FormContainer from "../../components/Form";
 import 'react-toastify/dist/ReactToastify.css';
 import Input from "../../components/Input";
 import ContainerMain from "./style";
-import React from 'react';
-import { UserContext } from "../../context/UserContext";
+import { SingInUser, UserContext } from "../../context/UserContext";
 import ModalLoading from "../../components/ModalLoading";
 
 const Login = () => {
-  const { singIn, modalLoading } = useContext(UserContext)
-  const [isVisiblePassword, setVisiblePassword] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { singIn, modalLoading } = useContext(UserContext);
+  const [isVisiblePassword, setVisiblePassword] = useState<boolean>(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<SingInUser>({
     resolver: yupResolver(schemaLogin)
   });
 

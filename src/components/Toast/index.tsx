@@ -4,19 +4,27 @@ import { AiFillCloseCircle, AiOutlineCheckCircle, AiOutlineWarning } from "react
 import { useContext, useEffect, useState } from "react";
 import { ToastContext } from "../../context/ToastContext";
 
-const Toast = ({ message, description = false, type, id}) => {
+interface IToastProps {
+  message: string,
+  description: string | undefined,
+  type: string,
+  id: string,
+}
+
+const Toast = ({ message, description, type, id}:IToastProps) => {
   const [isLeave, setIsLeave] = useState(false);
   const { removeToast } = useContext(ToastContext)
 
-  const icons = {
+  const icons: {
+    [key: string]: JSX.Element
+  } = {
     success: <AiOutlineCheckCircle fontSize={24}/>,
     error: <BiErrorCircle fontSize={24} />,
     warning: <AiOutlineWarning fontSize={24} />
   }
 
   useEffect(() => {
-    let timer
-
+    let timer: ReturnType<typeof setTimeout>;
     if(isLeave) {
       timer = setTimeout(() => {
         removeToast(id)

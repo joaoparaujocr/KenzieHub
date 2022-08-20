@@ -1,9 +1,8 @@
+import logo from "./../../assets/logo.png";
 import { useContext, useEffect, useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa"
 import { IoMdAdd } from "react-icons/io";
-import logo from "../../assets/logo.png"
 import DashboardStyle from "./style";
-import 'react-toastify/dist/ReactToastify.css';
 import ModalLoading from "../../components/ModalLoading";
 import { UserContext } from "../../context/UserContext";
 import { Navigate } from "react-router-dom";
@@ -11,19 +10,19 @@ import ModalRegisTech from "../../components/ModalRegisTech";
 import ModalUpdateTech from "../../components/ModalEditTech";
 
 const Dashboard = () => {
-  const { navigate, infoUser, modalLoading, getInfoUser, deleteTech } = useContext(UserContext);
+  const { navigate, infoUser, modalLoading, getInfoUser, deleteTech, user } = useContext(UserContext);
   const [modalIsOpen, setModalOpen] = useState(false);
   const [modalUpdateTech, setModalUpdateTech] = useState(false);
-  const [idTech, setIdTech] = useState(0);
+  const [idTech, setIdTech] = useState("");
 
   useEffect(() => {
-    getInfoUser()
+      getInfoUser()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [user])
 
   const logout = () => {
     localStorage.clear()
-    navigate("/", { replace: true })
+    navigate("/", { replace: true });
   }
 
   if(modalLoading) return <ModalLoading />
@@ -55,7 +54,7 @@ const Dashboard = () => {
               </div>
               <ul>
                 <ModalUpdateTech setIdTech={setIdTech} id={idTech} modalIsOpen={modalUpdateTech} closeModal={setModalUpdateTech} />
-                {infoUser.techs.length > 0 ? infoUser?.techs.map(({ id, title, status }) => (
+                {infoUser?.techs?.length > 0 ? infoUser.techs.map(({ id, title, status }) => (
                   <li key={id}>
                     <h2>{title}</h2>
 

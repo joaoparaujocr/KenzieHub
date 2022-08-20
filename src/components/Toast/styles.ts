@@ -1,4 +1,9 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, FlattenSimpleInterpolation, keyframes } from "styled-components";
+
+interface IContainerProps {
+  isLeave: boolean;
+  type: string;
+}
 
 const translateXAnimationFrom = keyframes`
 0% {
@@ -32,13 +37,13 @@ const mobileYAnimationLeave = keyframes`
   100% { transform: translateY(-120%) }
 `;
 
-const typeToast = {
+const typeToast: { [key: string]: FlattenSimpleInterpolation } = {
   success: css`background: #57e34f;`,
   error: css`background: #d11d35;`,
   warning: css`background: #cbd11d;`
 }
 
-const Container = styled.div`
+const Container = styled.div<IContainerProps>`
   width: 320px;
   display: flex;
   position: relative;

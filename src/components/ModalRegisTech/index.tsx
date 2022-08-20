@@ -1,23 +1,29 @@
 import Modal from 'react-modal';
 import { AiOutlineClose } from "react-icons/ai";
-import "./style.css"
+import ModalGlobal from './style';
 import Input from '../Input';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import schemaNewTech from "../../validations/newTech";
-import { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { Dispatch, SetStateAction, useContext } from 'react';
+import { INewTech, UserContext } from '../../context/UserContext';
 
 Modal.setAppElement("#root");
 
-const ModalRegisTech = ({modalIsOpen, closeModal}) => {
+interface IModalRegisTechProps {
+  modalIsOpen: boolean;
+  closeModal: Dispatch<SetStateAction<boolean>>
+}
+
+const ModalRegisTech = ({modalIsOpen, closeModal}: IModalRegisTechProps) => {
   const { createNewTechUser } = useContext(UserContext);
-  const { register, handleSubmit, formState: {errors} } = useForm({
+  const { register, handleSubmit, formState: {errors} } = useForm<INewTech>({
     resolver: yupResolver(schemaNewTech)
   })
 
   return (
     <>
+      <ModalGlobal />
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => closeModal(false)}
@@ -43,7 +49,7 @@ const ModalRegisTech = ({modalIsOpen, closeModal}) => {
             <option value="Intermediario">Intermediario</option>
             <option value="Avançado">Avançado</option>
           </select>
-          {errors.title?.status}
+          {errors.status?.message}
 
           <button type='submit'>Cadastrar Tecnologia</button>
         </form>

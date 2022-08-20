@@ -1,23 +1,42 @@
 import Modal from 'react-modal';
+import { Dispatch, SetStateAction } from 'react';
 import { AiOutlineClose } from "react-icons/ai";
-import "./style.css"
 import Input from '../Input';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { UserContext, IUpdateTech } from '../../context/UserContext';
+import ModalGlobal from "./style"
 
 Modal.setAppElement("#root");
 
-const ModalUpdateTech = ({ setIdTech, modalIsOpen, closeModal, id = null}) => {
+type SttusName = "status"
+
+export type Values = Record<SttusName, string>
+
+interface IModalUpdateTechProps {
+  setIdTech: Dispatch<SetStateAction<string>>;
+  modalIsOpen: boolean;
+  id: string ;
+  closeModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const ModalUpdateTech = ({ setIdTech, modalIsOpen, closeModal, id}: IModalUpdateTechProps) => {
   const { updateTech, infoUser: {techs} } = useContext(UserContext);
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<IUpdateTech>()
 
   if(!id) return <></>
 
-  const { title, status } = techs.find(({ id: idTechs }) => id === idTechs);
+  const tech = techs?.find(({ id: idTechs }) => id === idTechs);
+
+  const SubmitForm = (data: IUpdateTech) => {
+    updateTech(id, data);
+    setIdTech("");
+    closeModal(!modalIsOpen);
+  }
 
   return (
     <>
+      <ModalGlobal />
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => closeModal(false)}
@@ -27,21 +46,17 @@ const ModalUpdateTech = ({ setIdTech, modalIsOpen, closeModal, id = null}) => {
         <div>
           <h3>Atualizar Nivel</h3>
           <button onClick={() => {
-            setIdTech(null);
+            setIdTech("");
             closeModal(!modalIsOpen);
           }} ><AiOutlineClose /></button>
         </div>
 
-        <form onSubmit={handleSubmit((data) => {
-          updateTech(id, data);
-          setIdTech(null);
-          closeModal(!modalIsOpen);
-        })}>
+        <form onSubmit={handleSubmit(SubmitForm)}>
           <label htmlFor="title">Nome</label>
-          <Input disabled={true} value={title} id="title" />
+          <Input disabled={true} value={tech?.title} id="title" />
 
           <label htmlFor="status">Nivel</label>
-          <select defaultValue={status} {...register("status")} name="status" id="status">
+          <select defaultValue={tech?.status} {...register("status")} name="status" id="status">
             <option value="Iniciante">Iniciante</option>
             <option value="Intermediario">Intermediario</option>
             <option value="Avançado">Avançado</option>

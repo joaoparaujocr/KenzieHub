@@ -4,21 +4,24 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import ToastContainer from './components/ToastContainer';
 import ToastProvider from './context/ToastContext';
-import { UserProvide } from './context/UserContext';
+import { UserProvider } from './context/UserContext';
 import GlobalStyle from './style/global';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <ToastProvider>
-      <UserProvide>
-        <GlobalStyle />
-        <App />
+      <ToastProvider>
         <ToastContainer />
-      </UserProvide>
-    </ToastProvider>
+        <UserProvider>
+
+          <GlobalStyle />
+          <App />
+        </UserProvider>
+
+      </ToastProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
+

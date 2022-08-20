@@ -1,4 +1,7 @@
-.Modal {
+import { createGlobalStyle } from "styled-components";
+
+const ModalGlobal = createGlobalStyle`
+    .Modal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -71,3 +74,6 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.512)
 }
+`;
+
+export default ModalGlobal

@@ -3,7 +3,7 @@ import { ToastContext } from "../../context/ToastContext";
 import Toast from "../Toast";
 import Container from "./styles";
 
-const ToastContainer = ({children}) => {
+const ToastContainer = () => {
   const { messages } = useContext(ToastContext);
 
   return (
