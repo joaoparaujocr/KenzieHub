@@ -1,21 +1,11 @@
 import { createGlobalStyle } from "styled-components";
-import eot from "./../fonts/inter-v12-latin-regular.eot";
-import woff2 from "./../fonts/inter-v12-latin-regular.woff2";
-import woff from "./../fonts/inter-v12-latin-regular.woff"
 
 const GlobalStyle = createGlobalStyle`
-
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    src: url(${eot}); /* IE9 Compat Modes */
-    src: url('../fonts/inter-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-        url(${woff2}) format('woff2'), /* Super Modern Browsers */
-        url(${woff}) format('woff') /* Modern Browsers */
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+  
 
   :root {
+    font-family: "Inter";
     --color-primary: #FF577F;
     --color-primary-focus: #FF427F;
     --color-primary-negative: #59323F;
