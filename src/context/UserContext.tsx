@@ -7,7 +7,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { ToastContext } from "./ToastContext";
 import api from "../service/api";
 
@@ -78,7 +78,6 @@ export const UserProvider = ({ children }: IUserProps) => {
   const [user, setUser] = useState("");
   const { addToast } = useContext(ToastContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("@tokenkenziehub");
@@ -103,7 +102,7 @@ export const UserProvider = ({ children }: IUserProps) => {
       navigate("/", { replace: true })
     }
     
-  }, [location.pathname, navigate, user]);
+  }, [navigate]);
 
   const getInfoUser = async ():Promise<void> => {
     if (user) {
