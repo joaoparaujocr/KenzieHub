@@ -8,7 +8,7 @@ const schemaRegister = yup.object().shape({
     .matches(/(\d)/, "deve conter ao menos 1 número")
     .matches(/(\W)|_/, "deve conter ao menos 1 caracter especial")
     .matches(/.{8,}/, "deve conter ao menos 8 dígitos"),
-  confirmPassword: yup.string().required('Confirme sua senha').oneOf([yup.ref('password'), null], "Senhas não corresponde!"),
+  confirmPassword: yup.string().required('Confirme sua senha').oneOf([yup.ref('password'), null], "Senhas não correspondem"),
   bio: yup.string().required("Bio obrigatoria"),
   contact: yup.string().required("Contato obrigatorio"),
   course_module: yup.string().required("Modulo obrigatorio"),
