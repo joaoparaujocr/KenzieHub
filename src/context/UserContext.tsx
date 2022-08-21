@@ -193,7 +193,8 @@ export const UserProvider = ({ children }: IUserProps) => {
   }: User):Promise<void> => {
     const dataRegister = { email, password, name, bio, contact, course_module };
     setModalLoading(true);
-    api
+    await
+      api
       .post("/users", dataRegister)
       .then((res) => {
         addToast("success", "Usuario criado com sucesso.");

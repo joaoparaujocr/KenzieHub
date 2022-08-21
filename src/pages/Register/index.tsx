@@ -9,10 +9,19 @@ import ModalLoading from "../../components/ModalLoading";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
-const Register = () => {
-  const { modalLoading, registerUser } = useContext(UserContext)
+interface IUserRegister {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+const Register = () => {
+  const { modalLoading, registerUser } = useContext(UserContext);
+  const { register, handleSubmit, formState: { errors } } = useForm<IUserRegister>({
     resolver: yupResolver(schemaRegister)
   });
 
